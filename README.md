@@ -1,1 +1,1 @@
-# Conference_app
+README for the HFTP project
