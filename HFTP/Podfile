@@ -12,9 +12,10 @@ target 'HFTP' do
   use_frameworks!
 
   # Pods for HFTP
-  pod 'SideMenu'
+  pod 'SideMenu', '~> 6.0'
   pod 'Firebase/Core'
-  pod 'Firebase/Firestore'	
+  pod 'Firebase/Firestore'
+pod 'CalendarKit'	
 pod 'PhoneNumberKit', '~> 3.1'
 
 end

@@ -1,21 +1,23 @@
 {
   "images" : [
     {
+      "filename" : "sidemenubackground.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "sidemenubackground@2x.png",
       "idiom" : "universal",
-      "filename" : "sidemenubackground.png",
       "scale" : "2x"
     },
     {
+      "filename" : "sidemenubackground@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
   ],
   "info" : {
-    "version" : 1,
-    "author" : "xcode"
+    "author" : "xcode",
+    "version" : 1
   }
 }

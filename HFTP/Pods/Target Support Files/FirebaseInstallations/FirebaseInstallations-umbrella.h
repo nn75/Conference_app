@@ -14,6 +14,7 @@
 #import "FIRInstallations.h"
 #import "FIRInstallationsAuthTokenResult.h"
 #import "FIRInstallationsErrors.h"
+#import "FIRInstallationsVersion 2.h"
 #import "FIRInstallationsVersion.h"
 
 FOUNDATION_EXPORT double FirebaseInstallationsVersionNumber;

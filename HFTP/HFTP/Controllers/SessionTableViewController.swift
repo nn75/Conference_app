@@ -14,16 +14,20 @@ class SessionTableViewController: UITableViewController {
     
     let searchController = UISearchController(searchResultsController: nil)
     
-    var selectedSession : zSession = zSession()
+    var selectedSessionId  = ""
     
-    var currentSessions : [zSession] = []
+    var currentSessions : [Session] = []
+    
+    var currentSeesionIds : [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.sessionTable.dataSource = self
         self.sessionTable.delegate = self
         setUpSearchController()
+        self.sessionTable.register(UINib(nibName: "SessionTableViewCell", bundle: nil), forCellReuseIdentifier: K.identifiers.cellID)
         
+        loadSessions()
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -31,6 +35,12 @@ class SessionTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
 
+    func loadSessions(){
+        for id in currentSeesionIds{
+            currentSessions.append(sessionDic[id]!)
+        }
+    }
+    
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -45,20 +55,21 @@ class SessionTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = sessionTable.dequeueReusableCell(withIdentifier: K.identifiers.cellID, for: indexPath) as! SessionTableViewCell
-        cell.title = currentSessions[indexPath.row].name
-        // Configure the cell...
-        cell.setUpCell()
+        cell.sessionTitle.text = currentSessions[indexPath.row].name
+        cell.sessionType.text = currentSessions[indexPath.row].category
+        cell.sessionTime.text = "\(currentSessions[indexPath.row].startTime) - \(currentSessions[indexPath.row].endTime)"
+        cell.sessionLocation.text = currentSessions[indexPath.row].location
         return cell
     }
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.selectedSession = currentSessions[indexPath.row]
+        self.selectedSessionId = currentSeesionIds[indexPath.row]
         self.tableView.deselectRow(at: indexPath, animated: true)
         self.performSegue(withIdentifier: K.identifiers.sessionInfoSegue, sender: self)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let destination = segue.destination as! SessionInfoViewController
-        destination.thisSession = self.selectedSession
+        let destination = segue.destination as! SessionInfoTableViewController
+        destination.thisSessionId = self.selectedSessionId
     }
     
     /*
@@ -127,14 +138,13 @@ extension SessionTableViewController: UISearchBarDelegate, UISearchResultsUpdati
         searchController.searchBar.delegate = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.hidesNavigationBarDuringPresentation = true
+        
+        sessionTable.tableHeaderView = searchController.searchBar
+        searchController.searchBar.tintColor = UIColor(named: K.colors.hftpDarkBlue)
         searchController.searchBar.sizeToFit()
         searchController.searchBar.placeholder = K.texts.searchAgenda
-        searchController.searchBar.barTintColor = UIColor.clear
-        navigationItem.hidesSearchBarWhenScrolling = false
-        navigationItem.searchController = searchController
+        searchController.searchBar.barTintColor = UIColor.white
         definesPresentationContext = true
-        tableView.tableHeaderView = searchController.searchBar
-        print("se")
     }
     
     func updateSearchResults(for searchController: UISearchController) {

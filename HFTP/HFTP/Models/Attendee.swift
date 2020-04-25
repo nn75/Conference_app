@@ -7,30 +7,20 @@
 //
 
 import Foundation
+import UIKit
 
-class Attendee: Codable {
-    var firstName = "First"
-    var lastName = "Last"
-    var fullName = ""
-    var company = ""
-    var jobTitle = ""
-    var phoneNumber = ""
-    var email = ""
-    var memberID : UInt = 0
-    
+class Attendee: People {
     var credit = 0
-    
-    var linkedIn = ""
-    var facebook = ""
-    var instagram = ""
-    
-    // var sessions : [Session] = []
-    
-    init(f firstName:String, l lastName:String) {
-        self.firstName = firstName
-        self.lastName = lastName
-        self.fullName = firstName + " " + lastName
+    override init(n name:String, e email: String, c company: String, j jobTitle:String, p phoneNumber: String, id: String, se session: [String], sm socialMedia:[String], av avator: String) {
+        super.init(n:name,e:email,c:company,j:jobTitle,p:phoneNumber,id:id, se: session, sm:socialMedia, av: avator)
     }
     
-    init(){}
+    override init(){
+        super.init()
+    }
+    
+    required init(from decoder: Decoder) throws {
+        fatalError("init(from:) has not been implemented")
+    }
+    
 }

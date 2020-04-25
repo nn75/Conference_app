@@ -16,7 +16,8 @@ class SettingsPhoneViewController: UIViewController, CNContactPickerDelegate {
     let phoneNumberKit = PhoneNumberKit()
     
     @IBOutlet weak var phoneNumberTextField: PhoneNumberTextField!
-    
+    var placeholder = ""
+    var userIndex = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,18 +37,24 @@ class SettingsPhoneViewController: UIViewController, CNContactPickerDelegate {
         self.phoneNumberTextField.withPrefix = true
         self.phoneNumberTextField.withFlag = true
         self.phoneNumberTextField.withExamplePlaceholder = true
+        self.phoneNumberTextField.text = placeholder=="" ? "0000000000" : placeholder
     }
     
     @objc func saveButtonPressed() {
-        self.parseNumber(phoneNumberTextField.text!)
+        if let number = self.parseNumber(phoneNumberTextField.text!) {
+            attendeeList[userIndex].phoneNumber = number
+            _ = navigationController?.popViewController(animated: true)
+        }
     }
     
-    func parseNumber(_ number: String) {
+    func parseNumber(_ number: String) -> String? {
         do {
             let phoneNumber = try phoneNumberKit.parse(number)
             print(phoneNumber.numberString)
+            return phoneNumber.numberString
         } catch {
             print("Invalid phone number")
+            return nil
         }
     }
 }
